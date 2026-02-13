@@ -1,0 +1,155 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "start": "Start",
+    "logout": "Logout",
+    "login": "Login",
+    "dashboard": "Dashboard",
+    "admin": "Admin"
+  },
+  "home": {
+    "title": "Secure Multi-Level Test Platform",
+    "subtitle": "Experience the future of online testing with advanced security features, multi-level assessments, and comprehensive analytics.",
+    "getStarted": "Get Started",
+    "goToDashboard": "Go to Dashboard",
+    "learnMore": "Learn More",
+    "features": {
+      "title": "Platform Features",
+      "security": {
+        "title": "Advanced Security",
+        "description": "Anti-cheat measures including fullscreen mode, tab switching detection, and single-device login restrictions ensure test integrity."
+      },
+      "levels": {
+        "title": "Multi-Level Testing",
+        "description": "Three progressive difficulty levels with admin-controlled access, allowing structured learning paths and skill assessment."
+      },
+      "analytics": {
+        "title": "Comprehensive Analytics",
+        "description": "Detailed performance tracking, progress monitoring, and statistical analysis for both students and administrators."
+      },
+      "modes": {
+        "title": "Flexible Test Modes",
+        "description": "Choose from questions 1-45, 46-90, or full practice tests to customize your learning experience."
+      },
+      "management": {
+        "title": "User Management",
+        "description": "Admin-controlled user creation, level access management, and device session monitoring for complete control."
+      },
+      "languages": {
+        "title": "Multi-Language Support",
+        "description": "Available in English, Russian, and Uzbek languages to serve diverse user communities globally."
+      }
+    },
+    "cta": {
+      "title": "Ready to Transform Your Testing Experience?",
+      "subtitle": "Join thousands of users who trust our secure and comprehensive testing platform.",
+      "startNow": "Start Now"
+    }
+  },
+  "login": {
+    "title": "Test Platform",
+    "subtitle": "Secure Multi-Level Test Solving Platform",
+    "username": "Username",
+    "password": "Password",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "invalidCredentials": "Invalid credentials",
+    "accountDisabled": "Account is disabled",
+    "deviceRestriction": "Account is already logged in on another device",
+    "adminOnly": "Accounts are created by administrators only",
+    "contactAdmin": "Please contact your admin for access"
+  },
+  "dashboard": {
+    "welcome": "Welcome, {name}",
+    "chooseLevel": "Choose Your Level",
+    "levelDescription": "Select a test level to begin your assessment",
+    "level": "Level {number}",
+    "startTest": "Start Test",
+    "locked": "Locked",
+    "accessRestricted": "Access restricted",
+    "contactAdminUnlock": "Contact admin to unlock",
+    "yourProgress": "Your Progress",
+    "testsCompleted": "Tests Completed",
+    "averageScore": "Average Score",
+    "studyStreak": "Study Streak"
+  },
+  "test": {
+    "levelTest": "Level {level} Test",
+    "chooseType": "Choose your test type",
+    "questions1_45": "Questions 1-45",
+    "questions46_90": "Questions 46-90",
+    "fullPractice": "Full Practice",
+    "firstHalf": "First half of the test",
+    "secondHalf": "Second half of the test",
+    "allQuestions": "All 90 questions",
+    "question": "Question {current}/{total}",
+    "level": "Level {level}",
+    "type": "{type}",
+    "submitTest": "Submit Test",
+    "warning": "Warning {count}/3: Do not switch tabs or leave fullscreen! Test will be auto-submitted.",
+    "time": "Time"
+  },
+  "results": {
+    "title": "Test Results",
+    "subtitle": "Here's how you performed",
+    "score": "{score}%",
+    "excellent": "Excellent! Outstanding performance!",
+    "great": "Great job! Very good performance!",
+    "good": "Good work! Keep practicing!",
+    "fair": "Fair performance. Room for improvement.",
+    "keepPracticing": "Keep practicing! You can do better!",
+    "correct": "Correct",
+    "wrong": "Wrong",
+    "total": "Total",
+    "timeSpent": "Time",
+    "performanceAnalysis": "Performance Analysis",
+    "accuracyRate": "Accuracy Rate",
+    "averageTime": "Average Time per Question",
+    "performanceLevel": "Performance Level",
+    "scoreProgress": "Score Progress",
+    "recommendations": "Recommendations",
+    "backToDashboard": "Back to Dashboard",
+    "printResults": "Print Results"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "welcome": "Admin: {name}",
+    "dashboard": "Dashboard",
+    "userManagement": "User Management",
+    "statistics": "Statistics",
+    "totalUsers": "Total Users",
+    "activeUsers": "Active Users",
+    "totalTests": "Total Tests",
+    "averageScore": "Average Score",
+    "createUser": "Create User",
+    "username": "Username",
+    "password": "Password",
+    "role": "Role",
+    "status": "Status",
+    "levelAccess": "Level Access",
+    "device": "Device",
+    "actions": "Actions",
+    "active": "Active",
+    "inactive": "Inactive",
+    "reset": "Reset",
+    "platformStatistics": "Platform Statistics",
+    "recentTestResults": "Recent Test Results",
+    "user": "User",
+    "level": "Level",
+    "type": "Type",
+    "score": "Score",
+    "date": "Date",
+    "create": "Create",
+    "update": "Update"
+  }
+}

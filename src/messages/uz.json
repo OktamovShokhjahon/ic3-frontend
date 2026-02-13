@@ -1,0 +1,155 @@
+{
+  "common": {
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik",
+    "success": "Muvaffaqiyat",
+    "cancel": "Bekor qilish",
+    "save": "Saqlash",
+    "delete": "O'chirish",
+    "edit": "Tahrirlash",
+    "back": "Orqaga",
+    "next": "Keyingi",
+    "previous": "Oldingi",
+    "submit": "Yuborish",
+    "start": "Boshlash",
+    "logout": "Chiqish",
+    "login": "Kirish",
+    "dashboard": "Boshqaruv paneli",
+    "admin": "Administrator"
+  },
+  "home": {
+    "title": "Xavfsiz Ko'p Darajali Test Platformasi",
+    "subtitle": "Kengaytirilgan xavfsizlik xususiyatlari, ko'p darajali baholash va to'liq tahlil bilan onlayn testlash kelajagini biling.",
+    "getStarted": "Boshlang",
+    "goToDashboard": "Panelga o'ting",
+    "learnMore": "Ko'proq bilib oling",
+    "features": {
+      "title": "Platform Xususiyatlari",
+      "security": {
+        "title": "Kengaytirilgan Xavfsizlik",
+        "description": "To'liq ekran rejimi, o'tishni aniqlash va bitta qurilmada kirish cheklovlari kabi chetlash choralari testlarning yaxlitligini ta'minlaydi."
+      },
+      "levels": {
+        "title": "Ko'p Darajali Testlash",
+        "description": "Administrator tomonidan nazorat qilinadigan kirish bilan uchta progressiv qiyinlik darajasi, tuzilgan o'rganish yo'llari va ko'nikmalarni baholash imkonini beradi."
+      },
+      "analytics": {
+        "title": "To'liq Tahlil",
+        "description": "Talabalar va administratorlar uchun batafsil ishlash kuzatuvchi, progress monitoring va statistik tahlil."
+      },
+      "modes": {
+        "title": "Gibrik Test Rejimlari",
+        "description": "O'rganish tajribangizni sozlash uchun 1-45, 46-90 yoki to'liq amaliy test savollaridan tanlang."
+      },
+      "management": {
+        "title": "Foydalanuvchilarni Boshqarish",
+        "description": "To'liq nazorat uchun administrator tomonidan boshqariladigan foydalanuvchi yaratish, darajaga kirishni boshqarish va qurilma sessiyalarini monitoring."
+      },
+      "languages": {
+        "title": "Ko'p Tilli Qo'llab-quvvatlash",
+        "description": "Butun dunyo bo'ylab xilma-xil foydalanuvchi jamoalariga xizmat ko'rsatish uchun ingliz, rus va o'zbek tillarida mavjud."
+      }
+    },
+    "cta": {
+      "title": "Testlash Tajribangizni O'zgartirishga Tayyormisiz?",
+      "subtitle": "Bizning xavfsiz va to'liq test platformasiga ishonadigan minglab foydalanuvchilarga qo'shiling.",
+      "startNow": "Hozir Boshlang"
+    }
+  },
+  "login": {
+    "title": "Test Platformasi",
+    "subtitle": "Xavfsiz Ko'p Darajali Test Yechish Platformasi",
+    "username": "Foydalanuvchi nomi",
+    "password": "Parol",
+    "signIn": "Kirish",
+    "signingIn": "Kirilmoqda...",
+    "invalidCredentials": "Noto'g'ri kirish ma'lumotlari",
+    "accountDisabled": "Hisob o'chirilgan",
+    "deviceRestriction": "Hisob boshqa qurilmada allaqachon tizimga kirgan",
+    "adminOnly": "Hisoblar faqat administratorlar tomonidan yaratiladi",
+    "contactAdmin": "Kirish uchun administratoringiz bilan bog'laning"
+  },
+  "dashboard": {
+    "welcome": "Xush kelibsiz, {name}",
+    "chooseLevel": "Darajangizni Tanlang",
+    "levelDescription": "Baholashni boshlash uchun test darajasini tanlang",
+    "level": "{number}-Daraja",
+    "startTest": "Testni Boshlash",
+    "locked": "Qulflangan",
+    "accessRestricted": "Kirish cheklangan",
+    "contactAdminUnlock": "Ochish uchun administrator bilan bog'laning",
+    "yourProgress": "O'z Progressingiz",
+    "testsCompleted": "Tugatilgan Testlar",
+    "averageScore": "O'rtacha Ball",
+    "studyStreak": "O'qish Seriyasi"
+  },
+  "test": {
+    "levelTest": "{level}-Daraja Testi",
+    "chooseType": "Test turini tanlang",
+    "questions1_45": "Savollar 1-45",
+    "questions46_90": "Savollar 46-90",
+    "fullPractice": "To'liq Amaliyot",
+    "firstHalf": "Testning birinchi yarmi",
+    "secondHalf": "Testning ikkinchi yarmi",
+    "allQuestions": "Barcha 90 savol",
+    "question": "Savol {current}/{total}",
+    "level": "{level}-Daraja",
+    "type": "{type}",
+    "submitTest": "Testni Yuborish",
+    "warning": "Ogohlantirish {count}/3: Varaqlarni almashtirmang va to'liq ekrandan chiqmang! Test avtomatik yuboriladi.",
+    "time": "Vaqt"
+  },
+  "results": {
+    "title": "Test Natijalari",
+    "subtitle": "Siz qanday ishladingiz",
+    "score": "{score}%",
+    "excellent": "A'lo! Ajoyib ishlash!",
+    "great": "Ajoyib ish! Juda yaxshi ishlash!",
+    "good": "Yaxshi ish! Davom eting!",
+    "fair": "Qoniqarli ishlash. Yaxshilash uchun joy bor.",
+    "keepPracticing": "Davom eting! Yaxshiroq qila olasiz!",
+    "correct": "To'g'ri",
+    "wrong": "Noto'g'ri",
+    "total": "Jami",
+    "timeSpent": "Vaqt",
+    "performanceAnalysis": "Ishlash Tahlili",
+    "accuracyRate": "Aniqlik Darajasi",
+    "averageTime": "Savol uchun O'rtacha Vaqt",
+    "performanceLevel": "Ishlash Darajasi",
+    "scoreProgress": "Ball Progressi",
+    "recommendations": "Tavsiyalar",
+    "backToDashboard": "Panelga Qaytish",
+    "printResults": "Natijalarni Chop Etish"
+  },
+  "admin": {
+    "title": "Administrator Paneli",
+    "welcome": "Administrator: {name}",
+    "dashboard": "Boshqaruv paneli",
+    "userManagement": "Foydalanuvchilarni Boshqarish",
+    "statistics": "Statistika",
+    "totalUsers": "Jami Foydalanuvchilar",
+    "activeUsers": "Faol Foydalanuvchilar",
+    "totalTests": "Jami Testlar",
+    "averageScore": "O'rtacha Ball",
+    "createUser": "Foydalanuvchi Yaratish",
+    "username": "Foydalanuvchi nomi",
+    "password": "Parol",
+    "role": "Rol",
+    "status": "Holat",
+    "levelAccess": "Darajaga Kirish",
+    "device": "Qurilma",
+    "actions": "Harakatlar",
+    "active": "Faol",
+    "inactive": "Faol emas",
+    "reset": "Qayta o'rnatish",
+    "platformStatistics": "Platform Statistikasi",
+    "recentTestResults": "So'nggi Test Natijalari",
+    "user": "Foydalanuvchi",
+    "level": "Daraja",
+    "type": "Turi",
+    "score": "Ball",
+    "date": "Sana",
+    "create": "Yaratish",
+    "update": "Yangilash"
+  }
+}

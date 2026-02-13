@@ -1,0 +1,14 @@
+module.exports = {
+  apps: [
+    {
+      name: 'frontend',
+      script: 'node_modules/next/dist/bin/next',
+      args: 'start',
+      cwd: 'C:\\Users\\admin\\Desktop\\ic3-send\\frontend',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3000
+      }
+    }
+  ]
+}
