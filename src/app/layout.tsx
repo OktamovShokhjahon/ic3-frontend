@@ -1,13 +1,13 @@
-import './globals.css';
-import { Inter } from 'next/font/google';
-import { LockdownClient } from './LockdownClient';
-import { TranslationsProvider } from '../i18n/TranslationsProvider';
+import "./globals.css";
+import { Inter } from "next/font/google";
+import { LockdownClient } from "./LockdownClient";
+import { TranslationsProvider } from "../i18n/TranslationsProvider";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'Test Platform',
-  description: 'Secure Multi-Level Test Solving Platform',
+  title: "Test Platform",
+  description: "Secure Multi-Level Test Solving Platform",
 };
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <LockdownClient />
+        {/* <LockdownClient /> */}
         <TranslationsProvider>{children}</TranslationsProvider>
       </body>
     </html>

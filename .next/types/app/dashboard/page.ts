@@ -1,4 +1,4 @@
-// File: C:\Users\admin\Desktop\ic3-send\frontend\src\app\dashboard\page.tsx
+// File: D:\Technology\RealProjects\ic3\ic3-frontend\src\app\dashboard\page.tsx
 import * as entry from '../../../../src/app/dashboard/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

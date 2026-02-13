@@ -1,11 +1,4 @@
 {
-  "/_not-found": "app/_not-found.js",
-  "/admin/page": "app/admin/page.js",
-  "/page": "app/page.js",
-  "/results/page": "app/results/page.js",
-  "/test/[level]/page": "app/test/[level]/page.js",
   "/login/page": "app/login/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/testpage2/page": "app/testpage2/page.js",
-  "/testpage/page": "app/testpage/page.js"
+  "/dashboard/page": "app/dashboard/page.js"
 }
