@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { LockdownClient } from "./LockdownClient";
-import { TranslationsProvider } from "../i18n/TranslationsProvider";
+import { ClientProviders } from "../components/ClientProviders";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {/* <LockdownClient /> */}
-        <TranslationsProvider>{children}</TranslationsProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

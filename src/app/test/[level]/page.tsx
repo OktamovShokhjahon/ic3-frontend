@@ -1,8 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import api from '../../../lib/api';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import api from "../../../lib/api";
+import { useTranslations } from "../../../i18n/TranslationsProvider";
+import { LanguageSwitcher } from "../../../components/LanguageSwitcher";
+import { ThemeToggle } from "../../../components/ThemeToggle";
 
 interface Question {
   _id: string;
@@ -28,7 +31,9 @@ interface User {
 export default function TestPage({ params }: { params: { level: string } }) {
   const [user, setUser] = useState<User | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [testType, setTestType] = useState<'1-45' | '46-90' | 'full' | null>(null);
+  const [testType, setTestType] = useState<"1-45" | "46-90" | "full" | null>(
+    null,
+  );
   const [answers, setAnswers] = useState<number[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -39,6 +44,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
   const [warningCount, setWarningCount] = useState(0);
   const [legacyUrl, setLegacyUrl] = useState<string | null>(null);
   const router = useRouter();
+  const { t } = useTranslations();
 
   useEffect(() => {
     checkAuth();
@@ -56,7 +62,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (testStarted && document.hidden) {
-        setWarningCount(prev => prev + 1);
+        setWarningCount((prev) => prev + 1);
         if (warningCount >= 2) {
           handleSubmit(); // Auto-submit after 3 warnings
         }
@@ -65,7 +71,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
 
     const handleBlur = () => {
       if (testStarted) {
-        setWarningCount(prev => prev + 1);
+        setWarningCount((prev) => prev + 1);
         if (warningCount >= 2) {
           handleSubmit(); // Auto-submit after 3 warnings
         }
@@ -83,30 +89,30 @@ export default function TestPage({ params }: { params: { level: string } }) {
     };
 
     const handleKeydown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x')) {
+      if (e.ctrlKey && (e.key === "c" || e.key === "v" || e.key === "x")) {
         e.preventDefault();
         return false;
       }
-      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+      if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
         e.preventDefault();
         return false;
       }
     };
 
     if (testStarted) {
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-      window.addEventListener('blur', handleBlur);
-      document.addEventListener('contextmenu', handleContextMenu);
-      document.addEventListener('copy', handleCopy);
-      document.addEventListener('keydown', handleKeydown);
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+      window.addEventListener("blur", handleBlur);
+      document.addEventListener("contextmenu", handleContextMenu);
+      document.addEventListener("copy", handleCopy);
+      document.addEventListener("keydown", handleKeydown);
     }
 
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('blur', handleBlur);
-      document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('copy', handleCopy);
-      document.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("blur", handleBlur);
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("copy", handleCopy);
+      document.removeEventListener("keydown", handleKeydown);
     };
   }, [testStarted, warningCount]);
 
@@ -115,7 +121,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
       const response = await api.get(`/auth/me`);
       setUser(response.data.user);
     } catch (error) {
-      router.push('/login');
+      router.push("/login");
     } finally {
       setLoading(false);
     }
@@ -133,18 +139,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
       }
       setIsFullscreen(true);
     } catch (error) {
-      console.error('Fullscreen request failed:', error);
+      console.error("Fullscreen request failed:", error);
     }
   };
 
-  const startTest = async (type: '1-45' | '46-90' | 'full') => {
+  const startTest = async (type: "1-45" | "46-90" | "full") => {
     try {
       await requestFullscreen();
 
       // Special case: external iSpring test for Level 1, Questions 1–45
-      if (params.level === '1' && type === '1-45') {
+      if (params.level === "1" && type === "1-45") {
         // Served from frontend/public as /lvl-1-1/index.html
-        setLegacyUrl('/lvl-1-1/index.html');
+        setLegacyUrl("/lvl-1-1/index.html");
         setTestType(type);
         setTestStarted(true);
         setStartTime(Date.now());
@@ -154,9 +160,9 @@ export default function TestPage({ params }: { params: { level: string } }) {
       }
 
       // Special case: external iSpring test for Level 1, Questions 46–90
-      if (params.level === '1' && type === '46-90') {
+      if (params.level === "1" && type === "46-90") {
         // Served from frontend/public as /lvl-1-2/index.html
-        setLegacyUrl('/lvl-1-2/index.html');
+        setLegacyUrl("/lvl-1-2/index.html");
         setTestType(type);
         setTestStarted(true);
         setStartTime(Date.now());
@@ -165,7 +171,9 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
-      const response = await api.get(`/tests/questions/${params.level}/${type}`);
+      const response = await api.get(
+        `/tests/questions/${params.level}/${type}`,
+      );
 
       setQuestions(response.data.questions);
       setTestType(type);
@@ -174,10 +182,10 @@ export default function TestPage({ params }: { params: { level: string } }) {
       setStartTime(Date.now());
 
       // Set timer (90 minutes for full test, 45 minutes for half tests)
-      const timeLimit = type === 'full' ? 5400 : 2700;
+      const timeLimit = type === "full" ? 5400 : 2700;
       setTimeLeft(timeLimit);
     } catch (error) {
-      console.error('Failed to load questions:', error);
+      console.error("Failed to load questions:", error);
     }
   };
 
@@ -189,21 +197,23 @@ export default function TestPage({ params }: { params: { level: string } }) {
 
   const handleSubmit = async () => {
     if (!startTime || !testType) return;
-    
+
     const timeSpent = Math.floor((Date.now() - startTime) / 1000);
-    
+
     try {
       const response = await api.post(`/tests/submit`, {
         level: parseInt(params.level),
         type: testType,
-        questionIds: questions.map(q => q._id),
+        questionIds: questions.map((q) => q._id),
         answers,
-        timeSpent
+        timeSpent,
       });
-      
-      router.push(`/results?data=${encodeURIComponent(JSON.stringify(response.data.result))}`);
+
+      router.push(
+        `/results?data=${encodeURIComponent(JSON.stringify(response.data.result))}`,
+      );
     } catch (error) {
-      console.error('Failed to submit test:', error);
+      console.error("Failed to submit test:", error);
     }
   };
 
@@ -222,9 +232,13 @@ export default function TestPage({ params }: { params: { level: string } }) {
   if (!testStarted) {
     return (
       <div className="relative min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="absolute top-4 right-4 z-50 flex items-center space-x-2">
+          <ThemeToggle />
+          <LanguageSwitcher />
+        </div>
         {/* Watermark background with passport info (best-effort, non-interactive) */}
         {user && (
-          <div className="pointer-events-none select-none fixed inset-0 opacity-25 z-50">
+          <div className="pointer-events-none select-none fixed inset-0 opacity-10 z-50">
             <div className="relative w-full h-full">
               {Array.from({ length: 5 }).map((_, row) =>
                 Array.from({ length: 5 }).map((_, col) => {
@@ -233,32 +247,47 @@ export default function TestPage({ params }: { params: { level: string } }) {
                   return (
                     <div
                       key={`${row}-${col}`}
-                      className="absolute text-2xl md:text-3xl font-semibold tracking-wide text-gray-700 whitespace-nowrap"
+                      className="absolute text-lg md:text-xl font-semibold tracking-wide text-gray-700 whitespace-nowrap"
                       style={{
                         top: `${top}%`,
                         left: `${left}%`,
-                        transform: 'translate(-50%, -50%) rotate(-20deg)',
+                        transform: "translate(-50%, -50%) rotate(-20deg)",
                       }}
                     >
-                      {user.passportFullName ?? user.username} · {user.passportNumber ?? 'N/A'}
+                      {user.passportFullName ?? user.username} ·{" "}
+                      {user.passportNumber ?? "N/A"}
                     </div>
                   );
-                })
+                }),
               )}
             </div>
           </div>
         )}
         <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl backdrop-blur-lg bg-opacity-95">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Level {params.level} Test</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              Level {params.level} Test
+            </h1>
             <p className="text-gray-600">Choose your test type</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { type: '1-45' as const, label: 'Questions 1-45', desc: 'First half of the test' },
-              { type: '46-90' as const, label: 'Questions 46-90', desc: 'Second half of the test' },
-              { type: 'full' as const, label: 'Full Practice', desc: 'All 90 questions' }
+              {
+                type: "1-45" as const,
+                label: "Questions 1-45",
+                desc: "First half of the test",
+              },
+              {
+                type: "46-90" as const,
+                label: "Questions 46-90",
+                desc: "Second half of the test",
+              },
+              {
+                type: "full" as const,
+                label: "Full Practice",
+                desc: "All 90 questions",
+              },
             ].map((option) => (
               <button
                 key={option.type}
@@ -273,7 +302,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
 
           <div className="mt-8 text-center">
             <button
-              onClick={() => router.push('/dashboard')}
+              onClick={() => router.push("/dashboard")}
               className="text-gray-600 hover:text-gray-800 transition"
             >
               ← Back to Dashboard
@@ -286,17 +315,17 @@ export default function TestPage({ params }: { params: { level: string } }) {
 
   if (legacyUrl) {
     const legacyLabel =
-      testType === '1-45'
-        ? 'Questions 1–45'
-        : testType === '46-90'
-        ? 'Questions 46–90'
-        : 'Legacy Test';
+      testType === "1-45"
+        ? "Questions 1–45"
+        : testType === "46-90"
+          ? "Questions 46–90"
+          : "Legacy Test";
 
     return (
       <div className="relative min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-0">
         {/* Watermark background with passport info */}
         {user && (
-          <div className="pointer-events-none select-none fixed inset-0 opacity-25 z-50">
+          <div className="pointer-events-none select-none fixed inset-0 opacity-10 z-50">
             <div className="relative w-full h-full">
               {Array.from({ length: 5 }).map((_, row) =>
                 Array.from({ length: 5 }).map((_, col) => {
@@ -305,17 +334,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
                   return (
                     <div
                       key={`${row}-${col}`}
-                      className="absolute text-2xl md:text-3xl font-semibold tracking-wide text-gray-700 whitespace-nowrap"
+                      className="absolute text-lg md:text-xl font-semibold tracking-wide text-gray-700 whitespace-nowrap"
                       style={{
                         top: `${top}%`,
                         left: `${left}%`,
-                        transform: 'translate(-50%, -50%) rotate(-20deg)',
+                        transform: "translate(-50%, -50%) rotate(-20deg)",
                       }}
                     >
-                      {user.passportFullName ?? user.username} · {user.passportNumber ?? 'N/A'}
+                      {user.passportFullName ?? user.username} ·{" "}
+                      {user.passportNumber ?? "N/A"}
                     </div>
                   );
-                })
+                }),
               )}
             </div>
           </div>
@@ -330,29 +360,33 @@ export default function TestPage({ params }: { params: { level: string } }) {
             </div>
             <div className="flex items-center space-x-4">
               <div className="text-lg font-mono">
-                {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+                {Math.floor(timeLeft / 60)}:
+                {(timeLeft % 60).toString().padStart(2, "0")}
               </div>
               <button
                 onClick={async () => {
                   if (!startTime) {
-                    router.push('/dashboard');
+                    router.push("/dashboard");
                     return;
                   }
                   const timeSpent = Math.floor((Date.now() - startTime) / 1000);
                   try {
-                    const response = await api.post('/tests/legacy-complete', {
+                    const response = await api.post("/tests/legacy-complete", {
                       level: parseInt(params.level, 10),
-                      type: testType ?? '1-45',
-                      timeSpent
+                      type: testType ?? "1-45",
+                      timeSpent,
                     });
                     router.push(
                       `/results?data=${encodeURIComponent(
-                        JSON.stringify(response.data.result)
-                      )}`
+                        JSON.stringify(response.data.result),
+                      )}`,
                     );
                   } catch (error) {
-                    console.error('Failed to record legacy test result:', error);
-                    router.push('/dashboard');
+                    console.error(
+                      "Failed to record legacy test result:",
+                      error,
+                    );
+                    router.push("/dashboard");
                   }
                 }}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
@@ -379,6 +413,10 @@ export default function TestPage({ params }: { params: { level: string } }) {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="absolute top-4 right-4 z-50 flex items-center space-x-2">
+        <ThemeToggle />
+        <LanguageSwitcher />
+      </div>
       {/* Watermark background with passport info (best-effort, non-interactive) */}
       {user && (
         <div className="pointer-events-none select-none fixed inset-0 opacity-25 z-50">
@@ -394,13 +432,14 @@ export default function TestPage({ params }: { params: { level: string } }) {
                     style={{
                       top: `${top}%`,
                       left: `${left}%`,
-                      transform: 'translate(-50%, -50%) rotate(-20deg)',
+                      transform: "translate(-50%, -50%) rotate(-20deg)",
                     }}
                   >
-                    {user.passportFullName ?? user.username} · {user.passportNumber ?? 'N/A'}
+                    {user.passportFullName ?? user.username} ·{" "}
+                    {user.passportNumber ?? "N/A"}
                   </div>
                 );
-              })
+              }),
             )}
           </div>
         </div>
@@ -408,7 +447,8 @@ export default function TestPage({ params }: { params: { level: string } }) {
       {/* Warning Banner */}
       {warningCount > 0 && (
         <div className="bg-red-500 text-white p-4 text-center">
-          ⚠️ Warning {warningCount}/3: Do not switch tabs or leave fullscreen! Test will be auto-submitted.
+          ⚠️ Warning {warningCount}/3: Do not switch tabs or leave fullscreen!
+          Test will be auto-submitted.
         </div>
       )}
 
@@ -416,12 +456,17 @@ export default function TestPage({ params }: { params: { level: string } }) {
       <div className="bg-white rounded-t-2xl shadow-lg p-4 mb-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <span className="text-lg font-semibold">Question {currentQuestion + 1}/{questions.length}</span>
-            <span className="text-sm text-gray-600">Level {params.level} - {testType}</span>
+            <span className="text-lg font-semibold">
+              Question {currentQuestion + 1}/{questions.length}
+            </span>
+            <span className="text-sm text-gray-600">
+              Level {params.level} - {testType}
+            </span>
           </div>
           <div className="flex items-center space-x-4">
             <div className="text-lg font-mono">
-              {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+              {Math.floor(timeLeft / 60)}:
+              {(timeLeft % 60).toString().padStart(2, "0")}
             </div>
             <button
               onClick={handleSubmit}
@@ -431,12 +476,14 @@ export default function TestPage({ params }: { params: { level: string } }) {
             </button>
           </div>
         </div>
-        
+
         {/* Progress Bar */}
         <div className="mt-4 bg-gray-200 rounded-full h-2">
-          <div 
+          <div
             className="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+            style={{
+              width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+            }}
           />
         </div>
       </div>
@@ -446,7 +493,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
         <h2 className="text-2xl font-bold text-gray-800 mb-6">
           {currentQuestionData.question}
         </h2>
-        
+
         <div className="space-y-4">
           {currentQuestionData.options.map((option, index) => (
             <button
@@ -454,16 +501,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
               onClick={() => handleAnswer(currentQuestion, index)}
               className={`w-full text-left p-4 rounded-lg border-2 transition ${
                 answers[currentQuestion] === index
-                  ? 'border-blue-500 bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-200 hover:border-gray-300"
               }`}
             >
               <div className="flex items-center">
-                <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
-                  answers[currentQuestion] === index
-                    ? 'border-blue-500 bg-blue-500'
-                    : 'border-gray-300'
-                }`}>
+                <div
+                  className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
+                    answers[currentQuestion] === index
+                      ? "border-blue-500 bg-blue-500"
+                      : "border-gray-300"
+                  }`}
+                >
                   {answers[currentQuestion] === index && (
                     <div className="w-3 h-3 bg-white rounded-full" />
                   )}
@@ -485,7 +534,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
           >
             Previous
           </button>
-          
+
           <div className="flex space-x-2">
             {questions.map((_, index) => (
               <button
@@ -493,19 +542,23 @@ export default function TestPage({ params }: { params: { level: string } }) {
                 onClick={() => setCurrentQuestion(index)}
                 className={`w-8 h-8 rounded-full text-sm ${
                   answers[index] !== -1
-                    ? 'bg-green-500 text-white'
+                    ? "bg-green-500 text-white"
                     : currentQuestion === index
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-200 text-gray-600'
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-600"
                 }`}
               >
                 {index + 1}
               </button>
             ))}
           </div>
-          
+
           <button
-            onClick={() => setCurrentQuestion(Math.min(questions.length - 1, currentQuestion + 1))}
+            onClick={() =>
+              setCurrentQuestion(
+                Math.min(questions.length - 1, currentQuestion + 1),
+              )
+            }
             disabled={currentQuestion === questions.length - 1}
             className="bg-gray-500 hover:bg-gray-600 disabled:bg-gray-300 text-white px-6 py-2 rounded-lg transition"
           >
