@@ -171,6 +171,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
+      // Special case: external iSpring test for Level 1, Full Practice (79 questions)
+      if (params.level === "1" && type === "full") {
+        // Served from frontend/public as /lvl-1-3/index.html
+        setLegacyUrl("/lvl-1-3/index.html");
+        setTestType(type);
+        setTestStarted(true);
+        setStartTime(Date.now());
+        // 79 questions, give more time (120 minutes = 7200 seconds)
+        setTimeLeft(7200);
+        return;
+      }
+
       const response = await api.get(
         `/tests/questions/${params.level}/${type}`,
       );

@@ -120,6 +120,14 @@ export default function DashboardPage() {
               ];
             const isLocked = !isAccessible;
 
+            // Define level ranges
+            const levelRanges = {
+              1: { start: 1, end: 45, type: "Basic" },
+              2: { start: 45, end: 79, type: "Intermediate" },
+              3: { start: 1, end: 79, type: "Advanced" },
+            };
+            const range = levelRanges[level as keyof typeof levelRanges];
+
             return (
               <div
                 key={level}
@@ -171,6 +179,15 @@ export default function DashboardPage() {
                   <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
                     {t("dashboard.level", { number: level })}
                   </h3>
+                  <div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                    <div className="font-semibold mb-1">{range.type}</div>
+                    <div>
+                      {t("dashboard.questionRange", {
+                        start: range.start,
+                        end: range.end,
+                      })}
+                    </div>
+                  </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     {isLocked
                       ? t("dashboard.accessRestricted")
