@@ -72,12 +72,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 export function useTheme() {
   const ctx = useContext(ThemeContext);
   if (!ctx) {
-    // Don't throw error in development, return default
-    if (process.env.NODE_ENV === "development") {
-      console.warn("useTheme must be used within ThemeProvider");
-      return { theme: "light", toggleTheme: () => {} };
-    }
-    throw new Error("useTheme must be used within ThemeProvider");
+    // Return default for SSR to prevent crashes
+    return { theme: "light", toggleTheme: () => {} };
   }
   return ctx;
 }
