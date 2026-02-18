@@ -1,4 +1,4 @@
-// File: C:\Users\admin\Desktop\ic3-send\frontend\src\app\login\page.tsx
+// File: D:\Technology\RealProjects\ic3\ic3-frontend\src\app\login\page.tsx
 import * as entry from '../../../../src/app/login/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

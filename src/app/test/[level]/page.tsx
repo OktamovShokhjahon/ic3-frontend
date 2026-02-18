@@ -183,6 +183,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
+      // Special case: external iSpring test for Level 2, Questions 1-45
+      if (params.level === "2" && type === "1-45") {
+        // Served from frontend/public as /lvl-2-1/index.html
+        setLegacyUrl("/lvl-2-1/index.html");
+        setTestType(type);
+        setTestStarted(true);
+        setStartTime(Date.now());
+        // 45-minute timer for first half
+        setTimeLeft(2700);
+        return;
+      }
+
       const response = await api.get(
         `/tests/questions/${params.level}/${type}`,
       );
@@ -292,13 +304,13 @@ export default function TestPage({ params }: { params: { level: string } }) {
               },
               {
                 type: "46-90" as const,
-                label: "Questions 46-90",
+                label: "Questions 46-80",
                 desc: "Second half of the test",
               },
               {
                 type: "full" as const,
                 label: "Full Practice",
-                desc: "All 90 questions",
+                desc: "All 80 questions",
               },
             ].map((option) => (
               <button
