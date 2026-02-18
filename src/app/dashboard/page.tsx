@@ -165,16 +165,14 @@ export default function DashboardPage() {
                 )}
 
                 <div className="text-center">
-                  <div
-                    className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
-                      isLocked
-                        ? "bg-gray-300"
-                        : "bg-gradient-to-r from-blue-500 to-indigo-600"
-                    }`}
-                  >
-                    <span className="text-3xl font-bold text-white">
-                      {level}
-                    </span>
+                  <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                    <Image
+                      src={`/ic3-test-${level}.png`}
+                      alt={`Level ${level} Test`}
+                      width={96}
+                      height={96}
+                      className="object-contain"
+                    />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
                     {t("dashboard.level", { number: level })}
