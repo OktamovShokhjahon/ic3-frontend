@@ -31,9 +31,9 @@ interface User {
 export default function TestPage({ params }: { params: { level: string } }) {
   const [user, setUser] = useState<User | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [testType, setTestType] = useState<"1-45" | "46-90" | "full" | null>(
-    null,
-  );
+  const [testType, setTestType] = useState<
+    "1-45" | "46-90" | "84-115" | "full" | null
+  >(null);
   const [answers, setAnswers] = useState<number[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -143,7 +143,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
     }
   };
 
-  const startTest = async (type: "1-45" | "46-90" | "full") => {
+  const startTest = async (type: "1-45" | "46-90" | "84-115" | "full") => {
     try {
       await requestFullscreen();
 
@@ -216,6 +216,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
         setStartTime(Date.now());
         // 90-minute timer for full practice
         setTimeLeft(5400);
+        return;
+      }
+
+      // Special case: external iSpring test for Level 2, Questions 84-115
+      if (params.level === "2" && type === "84-115") {
+        // Served from frontend/public as /lvl-2-4/index.html
+        setLegacyUrl("/lvl-2-4/index.html");
+        setTestType(type);
+        setTestStarted(true);
+        setStartTime(Date.now());
+        // 45-minute timer for additional questions
+        setTimeLeft(2700);
         return;
       }
 
@@ -311,7 +323,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
             </div>
           </div>
         )}
-        <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl backdrop-blur-lg bg-opacity-95">
+        <div className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-6xl backdrop-blur-lg bg-opacity-95">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
               Level {params.level} Test
@@ -319,7 +331,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
             <p className="text-gray-600">Choose your test type</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 type: "1-45" as const,
@@ -332,9 +344,14 @@ export default function TestPage({ params }: { params: { level: string } }) {
                 desc: "Second half of the test",
               },
               {
+                type: "84-115" as const,
+                label: "Questions 84-115",
+                desc: "Additional practice questions",
+              },
+              {
                 type: "full" as const,
                 label: "Full Practice",
-                desc: "All 80 questions",
+                desc: "All 115 questions",
               },
             ].map((option) => (
               <button
@@ -367,7 +384,11 @@ export default function TestPage({ params }: { params: { level: string } }) {
         ? "Questions 1–45"
         : testType === "46-90"
           ? "Questions 46–90"
-          : "Legacy Test";
+          : testType === "84-115"
+            ? "Questions 84–115"
+            : testType === "full"
+              ? "Full Practice"
+              : "Legacy Test";
 
     return (
       <div className="relative min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-0">
