@@ -1,42 +1,59 @@
 "use client";
 
 import { useState } from "react";
+
 import { useRouter } from "next/navigation";
+
 import Image from "next/image";
+
 import api from "../../lib/api";
+
 import { useTranslations } from "../../i18n/TranslationsProvider";
+
 import { LanguageSwitcher } from "../../components/LanguageSwitcher";
+
 import { ThemeToggle } from "../../components/ThemeToggle";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
     username: "",
+
     password: "",
   });
+
   const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState("");
+
   const router = useRouter();
+
   const { t } = useTranslations();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
+
       [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setLoading(true);
+
     setError("");
 
     try {
       // Generate device ID
+
       const deviceId = localStorage.getItem("deviceId") || generateDeviceId();
+
       localStorage.setItem("deviceId", deviceId);
 
       const response = await api.post(`/auth/login`, {
         ...formData,
+
         deviceId,
       });
 
@@ -61,16 +78,20 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4">
       <div className="absolute top-4 right-4 flex items-center space-x-2">
         <ThemeToggle />
+
         <LanguageSwitcher />
       </div>
+
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md backdrop-blur-lg bg-opacity-95 dark:bg-gray-800 dark:bg-opacity-95">
         <div className="text-center mb-8">
           <div className="flex flex-col items-center mb-3">
             <Image src="/logo.png" alt="IC3 Xorazm" width={64} height={64} />
           </div>
+
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
             {t("login.title")}
           </h1>
+
           <p className="text-gray-600 dark:text-gray-300">
             {t("login.subtitle")}
           </p>
@@ -84,6 +105,7 @@ export default function LoginPage() {
             >
               {t("login.username")}
             </label>
+
             <input
               type="text"
               id="username"
@@ -103,6 +125,7 @@ export default function LoginPage() {
             >
               {t("login.password")}
             </label>
+
             <input
               type="password"
               id="password"
@@ -132,6 +155,7 @@ export default function LoginPage() {
 
         <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-300">
           <p>{t("login.adminOnly")}</p>
+
           <p className="mt-2">{t("login.contactAdmin")}</p>
         </div>
       </div>

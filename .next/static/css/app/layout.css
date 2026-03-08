@@ -879,9 +879,6 @@ video {
 .min-w-full {
   min-width: 100%;
 }
-.max-w-2xl {
-  max-width: 42rem;
-}
 .max-w-3xl {
   max-width: 48rem;
 }
@@ -1376,6 +1373,9 @@ video {
 .p-0 {
   padding: 0px;
 }
+.p-10 {
+  padding: 2.5rem;
+}
 .p-12 {
   padding: 3rem;
 }
@@ -1390,9 +1390,6 @@ video {
 }
 .p-8 {
   padding: 2rem;
-}
-.p-10 {
-  padding: 2.5rem;
 }
 .px-1 {
   padding-left: 0.25rem;

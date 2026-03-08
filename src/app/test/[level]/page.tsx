@@ -32,7 +32,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
   const [user, setUser] = useState<User | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [testType, setTestType] = useState<
-    "1-45" | "46-90" | "84-115" | "full" | null
+    "1-45" | "46-90" | "81-111" | "full" | null
   >(null);
   const [answers, setAnswers] = useState<number[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -143,7 +143,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
     }
   };
 
-  const startTest = async (type: "1-45" | "46-90" | "84-115" | "full") => {
+  const startTest = async (type: "1-45" | "46-90" | "81-111" | "full") => {
     try {
       await requestFullscreen();
 
@@ -167,6 +167,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
         setTestStarted(true);
         setStartTime(Date.now());
         // Same 45-minute limit as the first half
+        setTimeLeft(2700);
+        return;
+      }
+
+      // Special case: external iSpring test for Level 1, Questions 81-111
+      if (params.level === "1" && type === "81-111") {
+        // Served from frontend/public as /lvl-2-4/index.html (same as testpage7)
+        setLegacyUrl("/lvl-1-4/index.html");
+        setTestType(type);
+        setTestStarted(true);
+        setStartTime(Date.now());
+        // 45-minute timer for additional questions
         setTimeLeft(2700);
         return;
       }
@@ -219,8 +231,8 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
-      // Special case: external iSpring test for Level 2, Questions 84-115
-      if (params.level === "2" && type === "84-115") {
+      // Special case: external iSpring test for Level 2, Questions 81-111
+      if (params.level === "2" && type === "81-111") {
         // Served from frontend/public as /lvl-2-4/index.html
         setLegacyUrl("/lvl-2-4/index.html");
         setTestType(type);
@@ -344,14 +356,14 @@ export default function TestPage({ params }: { params: { level: string } }) {
                 desc: "Second half of the test",
               },
               {
-                type: "84-115" as const,
-                label: "Questions 84-115",
+                type: "81-111" as const,
+                label: "Questions 81-111",
                 desc: "Additional practice questions",
               },
               {
                 type: "full" as const,
                 label: "Full Practice",
-                desc: "All 115 questions",
+                desc: "All 111 questions",
               },
             ].map((option) => (
               <button
@@ -384,8 +396,8 @@ export default function TestPage({ params }: { params: { level: string } }) {
         ? "Questions 1–45"
         : testType === "46-90"
           ? "Questions 46–90"
-          : testType === "84-115"
-            ? "Questions 84–115"
+          : testType === "81-111"
+            ? "Questions 81–111"
             : testType === "full"
               ? "Full Practice"
               : "Legacy Test";

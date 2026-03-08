@@ -193,9 +193,14 @@ export default function AdminPage() {
   const handleLogout = async () => {
     try {
       await api.post(`/auth/logout`, {});
+      // Clear JWT token
+      localStorage.removeItem("token");
       router.push("/login");
     } catch (error) {
       console.error("Logout failed:", error);
+      // Still clear token and redirect on error
+      localStorage.removeItem("token");
+      router.push("/login");
     }
   };
 
