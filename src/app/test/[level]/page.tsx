@@ -233,6 +233,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
+      // Special case: external iSpring test for Level 2, Questions 84-115
+      if (params.level === "2" && type === "84-115") {
+        // Served from frontend/public as /lvl-2-4/index.html
+        setLegacyUrl("/lvl-2-4/index.html");
+        setTestType(type);
+        setTestStarted(true);
+        setStartTime(Date.now());
+        // 45-minute timer for additional questions
+        setTimeLeft(2700);
+        return;
+      }
+
       // Special case: external iSpring test for Level 3, Questions 1-40
       if (params.level === "3" && type === "1-40") {
         // Served from frontend/public as /lvl-3-1/index.html (same as testpage9)
