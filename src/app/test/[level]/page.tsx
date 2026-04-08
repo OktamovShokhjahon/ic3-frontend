@@ -281,6 +281,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
+      // Special case: external iSpring test for Level 3, Full Practice
+      if (params.level === "3" && type === "full") {
+        // Served from frontend/public as /lvl-3-4/index.html (same as testpage12)
+        setLegacyUrl("/lvl-3-4/index.html");
+        setTestType(type);
+        setTestStarted(true);
+        setStartTime(Date.now());
+        // 90-minute timer for full practice
+        setTimeLeft(5400);
+        return;
+      }
+
       const response = await api.get(
         `/tests/questions/${params.level}/${type}`,
       );
