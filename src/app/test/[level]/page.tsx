@@ -38,7 +38,8 @@ export default function TestPage({ params }: { params: { level: string } }) {
     | "1-40"
     | "41-72"
     | "72-125"
-    | "full-new"
+    | "full"
+    | "1-140"
     | null
   >(null);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -158,7 +159,8 @@ export default function TestPage({ params }: { params: { level: string } }) {
       | "1-40"
       | "41-72"
       | "72-125"
-      | "full-new",
+      | "full"
+      | "1-140",
   ) => {
     try {
       await requestFullscreen();
@@ -200,7 +202,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
       }
 
       // Special case: external iSpring test for Level 1, Full Practice (79 questions)
-      if (params.level === "1" && type === "full-new") {
+      if (params.level === "1" && type === "full") {
         // Served from frontend/public as /lvl-1-3/index.html
         setLegacyUrl("/lvl-1-3/index.html");
         setTestType(type);
@@ -236,7 +238,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
       }
 
       // Special case: external iSpring test for Level 2, Full Practice
-      if (params.level === "2" && type === "full-new") {
+      if (params.level === "2" && type === "full") {
         // Served from frontend/public as /lvl-2-3/index.html
         setLegacyUrl("/lvl-2-3/index.html");
         setTestType(type);
@@ -295,8 +297,8 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
-      // Special case: external iSpring test for Level 3, Full Practice (added new)
-      if (params.level === "3" && type === "full-new") {
+      // Special case: external iSpring test for Level 3, Questions 1-140 (new added)
+      if (params.level === "3" && type === "1-140") {
         // Served from frontend/public as /lvl-3-5/index.html (same as testpage13)
         setLegacyUrl("/lvl-3-5/index.html");
         setTestType(type);
@@ -318,7 +320,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
       setStartTime(Date.now());
 
       // Set timer (90 minutes for full test, 45 minutes for half tests)
-      const timeLimit = type === "full-new" ? 6300 : 2700;
+      const timeLimit = type === "1-140" ? 6300 : 2700;
       setTimeLeft(timeLimit);
     } catch (error) {
       console.error("Failed to load questions:", error);
@@ -435,13 +437,19 @@ export default function TestPage({ params }: { params: { level: string } }) {
                   <p className="text-sm opacity-90">Third part of Level 3</p>
                 </button>
                 <button
-                  key="full-new"
-                  onClick={() => startTest("full-new")}
+                  key="full"
+                  onClick={() => router.push("/testpage12")}
                   className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition transform hover:scale-105"
                 >
-                  <h3 className="text-xl font-bold mb-2">
-                    Full Practice (added new)
-                  </h3>
+                  <h3 className="text-xl font-bold mb-2">Full Practice</h3>
+                  <p className="text-sm opacity-90">All questions</p>
+                </button>
+                <button
+                  key="1-140"
+                  onClick={() => startTest("1-140")}
+                  className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition transform hover:scale-105"
+                >
+                  <h3 className="text-xl font-bold mb-2">1-140 (new added)</h3>
                   <p className="text-sm opacity-90">All 140 questions</p>
                 </button>
               </>
@@ -472,6 +480,14 @@ export default function TestPage({ params }: { params: { level: string } }) {
                   <p className="text-sm opacity-90">
                     Additional practice questions
                   </p>
+                </button>
+                <button
+                  key="full"
+                  onClick={() => startTest("full")}
+                  className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition transform hover:scale-105"
+                >
+                  <h3 className="text-xl font-bold mb-2">Full Practice</h3>
+                  <p className="text-sm opacity-90">All questions</p>
                 </button>
               </>
             )}
@@ -504,9 +520,11 @@ export default function TestPage({ params }: { params: { level: string } }) {
                 ? "Questions 41–72"
                 : testType === "72-125"
                   ? "Questions 72–125"
-                  : testType === "full-new"
-                    ? "Full Practice (added new)"
-                    : "Legacy Test";
+                  : testType === "full"
+                    ? "Full Practice"
+                    : testType === "1-140"
+                      ? "1-140 (new added)"
+                      : "Legacy Test";
 
     return (
       <div className="relative min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-0">
