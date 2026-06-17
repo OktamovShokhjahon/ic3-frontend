@@ -16,6 +16,7 @@ interface User {
     level1: boolean;
     level2: boolean;
     level3: boolean;
+    level4: boolean;
   };
   createdAt: string;
   deviceId?: string;
@@ -178,7 +179,7 @@ export default function AdminPage() {
 
   const handleToggleLevelAccess = async (
     targetUser: User,
-    levelKey: "level1" | "level2" | "level3",
+    levelKey: "level1" | "level2" | "level3" | "level4",
   ) => {
     try {
       await api.put(`/admin/users/${targetUser._id}/level-access`, {
@@ -427,7 +428,7 @@ export default function AdminPage() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                         <div className="flex space-x-2">
-                          {(["level1", "level2", "level3"] as const).map(
+                          {(["level1", "level2", "level3", "level4"] as const).map(
                             (levelKey, idx) => {
                               const enabled = user.levelAccess[levelKey];
                               const label = `L${idx + 1}`;
@@ -624,6 +625,7 @@ function UserModal({
       level1: false,
       level2: false,
       level3: false,
+      level4: false,
     },
     passportFullName: user?.passportFullName || "",
     passportNumber: user?.passportNumber || "",
@@ -744,7 +746,7 @@ function UserModal({
               Level Access
             </label>
             <div className="space-y-2">
-              {["level1", "level2", "level3"].map((level) => (
+              {["level1", "level2", "level3", "level4"].map((level) => (
                 <label key={level} className="flex items-center">
                   <input
                     type="checkbox"

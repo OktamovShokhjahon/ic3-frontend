@@ -16,6 +16,7 @@ interface User {
     level1: boolean;
     level2: boolean;
     level3: boolean;
+    level4: boolean;
   };
 }
 
@@ -117,12 +118,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Level Cards - Normal Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[1, 2, 3].map((level) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[1, 2, 3, 4].map((level) => {
             const isAccessible =
               user.levelAccess[
                 `level${level}` as keyof typeof user.levelAccess
-              ];
+              ] ?? false;
             const isLocked = !isAccessible;
 
             // Define level ranges
@@ -130,8 +131,11 @@ export default function DashboardPage() {
               1: { start: 1, end: 45, type: "Basic" },
               2: { start: 45, end: 79, type: "Intermediate" },
               3: { start: 1, end: 79, type: "Advanced" },
+              4: { start: 0, end: 0, type: "IC3 Uzbekistan" },
             };
             const range = levelRanges[level as keyof typeof levelRanges];
+            const levelTitle =
+              level === 4 ? "IC3 Uzbekistan" : t("dashboard.level", { number: level });
 
             return (
               <div
@@ -180,16 +184,18 @@ export default function DashboardPage() {
                     />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                    {t("dashboard.level", { number: level })}
+                    {levelTitle}
                   </h3>
                   <div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                     <div className="font-semibold mb-1">{range.type}</div>
-                    <div>
-                      {t("dashboard.questionRange", {
-                        start: range.start,
-                        end: range.end,
-                      })}
-                    </div>
+                    {level !== 4 && (
+                      <div>
+                        {t("dashboard.questionRange", {
+                          start: range.start,
+                          end: range.end,
+                        })}
+                      </div>
+                    )}
                   </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     {isLocked

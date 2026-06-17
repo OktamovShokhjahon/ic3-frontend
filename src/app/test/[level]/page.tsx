@@ -23,6 +23,7 @@ interface User {
     level1: boolean;
     level2: boolean;
     level3: boolean;
+    level4: boolean;
   };
   passportFullName?: string;
   passportNumber?: string;
@@ -40,7 +41,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
     | "72-125"
     | "full"
     | "1-140"
-    | "ic3-uzbekistan"
+    | "test"
     | null
   >(null);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -162,7 +163,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
       | "72-125"
       | "full"
       | "1-140"
-      | "ic3-uzbekistan",
+      | "test",
   ) => {
     try {
       await requestFullscreen();
@@ -311,14 +312,12 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
-      // Special case: external iSpring test for Level 3, IC3 (Uzbekistan)
-      if (params.level === "3" && type === "ic3-uzbekistan") {
-        // Served from frontend/public as /lvl-3-6/index.html
+      // Special case: external iSpring test for Level 4, IC3 Uzbekistan
+      if (params.level === "4" && type === "test") {
         setLegacyUrl("/lvl-3-6/index.html");
         setTestType(type);
         setTestStarted(true);
         setStartTime(Date.now());
-        // 90-minute timer for IC3 Uzbekistan test
         setTimeLeft(5400);
         return;
       }
@@ -418,13 +417,24 @@ export default function TestPage({ params }: { params: { level: string } }) {
         <div className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-6xl backdrop-blur-lg bg-opacity-95">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              Level {params.level} Test
+              {params.level === "4"
+                ? "IC3 Uzbekistan Test"
+                : `Level ${params.level} Test`}
             </h1>
             <p className="text-gray-600">Choose your test type</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {params.level === "3" ? (
+            {params.level === "4" ? (
+              <button
+                key="test"
+                onClick={() => startTest("test")}
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition transform hover:scale-105"
+              >
+                <h3 className="text-xl font-bold mb-2">test</h3>
+                <p className="text-sm opacity-90">IC3 Uzbekistan test</p>
+              </button>
+            ) : params.level === "3" ? (
               <>
                 <button
                   key="1-40"
@@ -465,14 +475,6 @@ export default function TestPage({ params }: { params: { level: string } }) {
                 >
                   <h3 className="text-xl font-bold mb-2">1-140 (new added)</h3>
                   <p className="text-sm opacity-90">All 140 questions</p>
-                </button>
-                <button
-                  key="ic3-uzbekistan"
-                  onClick={() => startTest("ic3-uzbekistan")}
-                  className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition transform hover:scale-105"
-                >
-                  <h3 className="text-xl font-bold mb-2">IC3 (Uzbekistan)</h3>
-                  <p className="text-sm opacity-90">IC3 Uzbekistan test</p>
                 </button>
               </>
             ) : (
@@ -546,8 +548,8 @@ export default function TestPage({ params }: { params: { level: string } }) {
                     ? "Full Practice"
                     : testType === "1-140"
                       ? "1-140 (new added)"
-                      : testType === "ic3-uzbekistan"
-                        ? "IC3 (Uzbekistan)"
+                      : testType === "test"
+                        ? "test"
                         : "Legacy Test";
 
     return (
