@@ -40,6 +40,7 @@ export default function TestPage({ params }: { params: { level: string } }) {
     | "72-125"
     | "full"
     | "1-140"
+    | "ic3-uzbekistan"
     | null
   >(null);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -160,7 +161,8 @@ export default function TestPage({ params }: { params: { level: string } }) {
       | "41-72"
       | "72-125"
       | "full"
-      | "1-140",
+      | "1-140"
+      | "ic3-uzbekistan",
   ) => {
     try {
       await requestFullscreen();
@@ -309,6 +311,18 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
+      // Special case: external iSpring test for Level 3, IC3 (Uzbekistan)
+      if (params.level === "3" && type === "ic3-uzbekistan") {
+        // Served from frontend/public as /lvl-3-6/index.html
+        setLegacyUrl("/lvl-3-6/index.html");
+        setTestType(type);
+        setTestStarted(true);
+        setStartTime(Date.now());
+        // 90-minute timer for IC3 Uzbekistan test
+        setTimeLeft(5400);
+        return;
+      }
+
       const response = await api.get(
         `/tests/questions/${params.level}/${type}`,
       );
@@ -452,6 +466,14 @@ export default function TestPage({ params }: { params: { level: string } }) {
                   <h3 className="text-xl font-bold mb-2">1-140 (new added)</h3>
                   <p className="text-sm opacity-90">All 140 questions</p>
                 </button>
+                <button
+                  key="ic3-uzbekistan"
+                  onClick={() => startTest("ic3-uzbekistan")}
+                  className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition transform hover:scale-105"
+                >
+                  <h3 className="text-xl font-bold mb-2">IC3 (Uzbekistan)</h3>
+                  <p className="text-sm opacity-90">IC3 Uzbekistan test</p>
+                </button>
               </>
             ) : (
               <>
@@ -524,7 +546,9 @@ export default function TestPage({ params }: { params: { level: string } }) {
                     ? "Full Practice"
                     : testType === "1-140"
                       ? "1-140 (new added)"
-                      : "Legacy Test";
+                      : testType === "ic3-uzbekistan"
+                        ? "IC3 (Uzbekistan)"
+                        : "Legacy Test";
 
     return (
       <div className="relative min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-0">
