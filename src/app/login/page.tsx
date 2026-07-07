@@ -58,6 +58,7 @@ export default function LoginPage() {
       });
 
       if (response.data.message === "Login successful") {
+        localStorage.setItem("token", response.data.token);
         router.push("/dashboard");
       }
     } catch (err: any) {

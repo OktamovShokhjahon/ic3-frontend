@@ -17,6 +17,7 @@ interface User {
     level2: boolean;
     level3: boolean;
     level4: boolean;
+    level5: boolean;
   };
 }
 
@@ -119,7 +120,7 @@ export default function DashboardPage() {
 
         {/* Level Cards - Normal Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[1, 2, 3, 4].map((level) => {
+          {[1, 2, 3, 4, 5].map((level) => {
             const isAccessible =
               user.levelAccess[
                 `level${level}` as keyof typeof user.levelAccess
@@ -132,10 +133,11 @@ export default function DashboardPage() {
               2: { start: 45, end: 79, type: "Intermediate" },
               3: { start: 1, end: 79, type: "Advanced" },
               4: { start: 0, end: 0, type: "IC3 Uzbekistan" },
+              5: { start: 0, end: 0, type: "IC3 Uzbekistan 2" },
             };
             const range = levelRanges[level as keyof typeof levelRanges];
             const levelTitle =
-              level === 4 ? "IC3 Uzbekistan" : t("dashboard.level", { number: level });
+              level === 4 ? "IC3 Uzbekistan" : level === 5 ? "IC3 Uzbekistan 2" : t("dashboard.level", { number: level });
 
             return (
               <div
@@ -188,7 +190,7 @@ export default function DashboardPage() {
                   </h3>
                   <div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                     <div className="font-semibold mb-1">{range.type}</div>
-                    {level !== 4 && (
+                    {level !== 4 && level !== 5 && (
                       <div>
                         {t("dashboard.questionRange", {
                           start: range.start,

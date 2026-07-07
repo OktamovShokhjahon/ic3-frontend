@@ -24,6 +24,7 @@ interface User {
     level2: boolean;
     level3: boolean;
     level4: boolean;
+    level5: boolean;
   };
   passportFullName?: string;
   passportNumber?: string;
@@ -322,6 +323,16 @@ export default function TestPage({ params }: { params: { level: string } }) {
         return;
       }
 
+      // Special case: external iSpring test for Level 5, IC3 Uzbekistan 2
+      if (params.level === "5" && type === "test") {
+        setLegacyUrl("/lvl-2-5/index.html");
+        setTestType(type);
+        setTestStarted(true);
+        setStartTime(Date.now());
+        setTimeLeft(5400);
+        return;
+      }
+
       const response = await api.get(
         `/tests/questions/${params.level}/${type}`,
       );
@@ -419,20 +430,24 @@ export default function TestPage({ params }: { params: { level: string } }) {
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
               {params.level === "4"
                 ? "IC3 Uzbekistan Test"
-                : `Level ${params.level} Test`}
+                : params.level === "5"
+                  ? "IC3 Uzbekistan 2 Test"
+                  : `Level ${params.level} Test`}
             </h1>
             <p className="text-gray-600">Choose your test type</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {params.level === "4" ? (
+            {params.level === "4" || params.level === "5" ? (
               <button
                 key="test"
                 onClick={() => startTest("test")}
                 className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition transform hover:scale-105"
               >
                 <h3 className="text-xl font-bold mb-2">test</h3>
-                <p className="text-sm opacity-90">IC3 Uzbekistan test</p>
+                <p className="text-sm opacity-90">
+                  {params.level === "4" ? "IC3 Uzbekistan test" : "IC3 Uzbekistan 2 test"}
+                </p>
               </button>
             ) : params.level === "3" ? (
               <>
